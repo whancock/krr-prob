@@ -1,0 +1,93 @@
+(in-microtheory QualProbMt)
+(genlMt QualProbMt UniversalVocabularyMt)
+
+(isa RandomEventOne CycLPropositionalSentence)
+(isa RandomEventTwo CycLPropositionalSentence)
+(isa RandomEventTre CycLPropositionalSentence)
+(isa RandomEventFur CycLPropositionalSentence)
+
+
+(prob RandomEventOne 1)
+(prob RandomEventTwo 0.35)
+(prob RandomEventTre 0)
+(prob RandomEventFur 1)
+
+
+(isa prob Predicate)
+(arity prob 2)
+(arg1Isa prob Real0-1)
+(arg2Isa prob CycLPropositionalSentence)
+
+
+(isa likely Predicate)
+(arity likely 1)
+(arg1Isa likely CycLPropositionalSentence)
+
+(isa tautological Predicate)
+(arity tautological 1)
+(arg1Isa tautological CycLPropositionalSentence)
+
+(isa contradictory Predicate)
+(arity contradictory 1)
+(arg1Isa contradictory CycLPropositionalSentence)
+
+
+
+(<== (tautological ?ev)
+	(isa ?ev CycLPropositionalSentence)
+	(prob ?ev 1))
+
+
+(<== (contradictory ?ev) 
+	(isa ?ev CycLPropositionalSentence)
+	(prob ?ev 0))
+
+
+(<== (atLeastAsLikelyAs ?eva ?evb)
+	(contradictory ?evb))
+
+
+;;; do we need this?
+(<== (atLeastAsLikelyAs ?eva ?evb)
+	(moreLikelyThan ?eva ?evb))
+
+
+(<== (moreLikelyThan ?eva ?evb)
+	(and 
+		(tautological ?eva)
+		(contradictory ?evb)))
+
+
+;;; added by me
+(<== (moreLikelyThan ?eva ?evb)
+	(and
+		(prob ?eva ?pa)
+		(prob ?evb ?pb)
+		(greaterThan ?pa ?pb)))
+
+
+(<== (equallyLikely ?eva ?evb)
+	(and
+		(atLeastAsLikelyAs ?eva ?evb)
+		(atLeastAsLikelyAs ?evb ?eva)))
+
+
+
+(<== (likely(?eva)) 
+	(and 
+		(moreLikelyThan(?eva ?evb))
+		(negationOf(?evb ?eva))))	
+
+
+
+(<== (likely ?ev)
+	(and 
+		(prob ?ev ?number)
+		(greaterThan ?number .5)))
+
+
+
+(<== (moreLikelyThan ?eva ?evb)
+	(and 
+		(likely ?eva)
+		(negationOf ?evb ?eva)))
