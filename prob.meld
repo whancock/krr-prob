@@ -17,8 +17,8 @@
 
 (isa prob Predicate)
 (arity prob 2)
-(arg1Isa prob Real0-1)
-(arg2Isa prob CycLPropositionalSentence)
+(arg1Isa prob CycLPropositionalSentence)
+(arg2Isa prob Real0-1)
 
 
 (isa likely Predicate)
