@@ -1,7 +1,9 @@
-;;; aaa
+;;; Microtheory for qualitative probability.
 
 (in-microtheory QualProbMt)
 (genlMt QualProbMt UniversalVocabularyMt)
+
+;;; objects to use in our tests
 
 (isa RandomEventOne CycLPropositionalSentence)
 (isa RandomEventTwo CycLPropositionalSentence)
@@ -14,6 +16,7 @@
 (prob RandomEventTre 0)
 (prob RandomEventFur 1)
 
+;;; ontology
 
 (isa prob Predicate)
 (arity prob 2)
@@ -34,6 +37,7 @@
 (arg1Isa contradictory CycLPropositionalSentence)
 
 
+;;; these definitions
 
 (<== (tautological ?ev)
 	(isa ?ev CycLPropositionalSentence)
