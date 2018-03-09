@@ -3,7 +3,7 @@
 (in-microtheory QualProbMt)
 (genlMt QualProbMt UniversalVocabularyMt)
 
-;;; objects to use in our tests
+;;; CycLpropositionalSentences to use in our tests
 
 (isa RandomEventOne CycLPropositionalSentence)
 (isa RandomEventTwo CycLPropositionalSentence)
@@ -23,10 +23,28 @@
 (arg1Isa prob CycLPropositionalSentence)
 (arg2Isa prob Real0-1)
 
+(isa lessLikelyThan Predicate)
+(arity lessLikelyThan 2)
+(arg1Isa lessLikelyThan CycLPropositionalSentence)
+(arg2Isa lessLikelyThan CycLPropositionalSentence)
+
+(isa atMostAsLikelyAs Predicate)
+(arity atMostAsLikelyAs 2)
+(arg1Isa atMostAsLikelyAs CycLPropositionalSentence)
+(arg2Isa atMostAsLikelyAs CycLPropositionalSentence)
+
+(isa equallyLikely Predicate)
+(arity equallyLikely 2)
+(arg1Isa equallyLikely CycLPropositionalSentence)
+(arg2Isa equallyLikely CycLPropositionalSentence)
 
 (isa likely Predicate)
 (arity likely 1)
 (arg1Isa likely CycLPropositionalSentence)
+
+(isa unlikely Predicate)
+(arity unlikely 1)
+(arg1Isa unlikely CycLPropositionalSentence)
 
 (isa tautological Predicate)
 (arity tautological 1)
@@ -37,63 +55,79 @@
 (arg1Isa contradictory CycLPropositionalSentence)
 
 
-;;; these definitions
+;;; these definitions are operationalizing the concepts of tautology and contradiction (we are not assuming these are given as granted)
 
 (<== (tautological ?ev)
 	(isa ?ev CycLPropositionalSentence)
 	(prob ?ev 1))
 
-
 (<== (contradictory ?ev) 
 	(isa ?ev CycLPropositionalSentence)
 	(prob ?ev 0))
 
+;;; qualitative probability rules involving tautological and contradictory propositions
 
 (<== (atLeastAsLikelyAs ?eva ?evb)
 	(contradictory ?evb))
 
-
-;;; do we need this?
 (<== (atLeastAsLikelyAs ?eva ?evb)
-	(moreLikelyThan ?eva ?evb))
-
+    (tautological ?eva))
 
 (<== (moreLikelyThan ?eva ?evb)
 	(and 
 		(tautological ?eva)
 		(contradictory ?evb)))
 
+;;; Links between comparative predicates (this could be handled via genls)
 
-;;; added by me
+(<== (atLeastAsLikelyAs ?eva ?evb)
+    (atMostAsLikelyAs ?evb ?eva))
+
+(<== (moreLikelyThan ?eva ?evb)
+    (lessLikelyThan ?evb ?eva))
+
+(<== (atLeastAsLikelyAs ?eva ?evb)
+    (moreLikelyThan ?eva ?evb))
+
+(<== (atMostAsLikelyAs ?eva ?evb)
+    (lessLikelyThan ?eva ?evb))
+
+(<== (equallyLikely ?eva ?evb)
+    (and
+        (atLeastAsLikelyAs ?eva ?evb)
+        (atLeastAsLikelyAs ?evb ?eva)))
+
+;;; links between binary and unary probability operators.
+;;; likely p iff p is more likely than not p
+
+(<== (likely(?eva))
+    (and
+        (moreLikelyThan(?eva ?evb))
+        (negationOf(?evb ?eva))))
+
+(<== (moreLikelyThan(?eva ?evb))
+    (and
+        (likely(?eva))
+        (negationOf(?evb ?eva))))
+
+;;; principles for exporting from numerical probability into comparative
+
 (<== (moreLikelyThan ?eva ?evb)
 	(and
 		(prob ?eva ?pa)
 		(prob ?evb ?pb)
 		(greaterThan ?pa ?pb)))
 
-
-(<== (equallyLikely ?eva ?evb)
-	(and
-		(atLeastAsLikelyAs ?eva ?evb)
-		(atLeastAsLikelyAs ?evb ?eva)))
-
-
-
-(<== (likely(?eva)) 
-	(and 
-		(moreLikelyThan(?eva ?evb))
-		(negationOf(?evb ?eva))))	
-
-
-
 (<== (likely ?ev)
-	(and 
-		(prob ?ev ?number)
-		(greaterThan ?number .5)))
+    (and
+        (prob ?ev ?number)
+        (greaterThan ?number .5)))
+
+(<== (unlikely ?ev)
+    (and
+        (prob ?ev ?number)
+        (lessThan ?number .5)))
 
 
 
-(<== (moreLikelyThan ?eva ?evb)
-	(and 
-		(likely ?eva)
-		(negationOf ?evb ?eva)))
+
