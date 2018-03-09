@@ -1,2 +1,32 @@
 ;;; definitions for a game that can be reasoned about using qual prop
 
+; define reasonable scenarios under which we would want to attack
+; is this a planning problem?
+; what do cognitive decisions look like under these cases?
+; 
+; which scenarios in freeciv are inherently probabliistic... i.e. we would want to reason about
+; them in this way? 
+; 
+; hut exploration
+; combat
+; 
+; higher order scenarios?
+; winning?
+; 
+; what assumptions do we make?
+; closed world... i.e. all things are improbable unless explicitly stated
+; 
+; 
+; 
+; why is this language important?
+; in a game like freeciv, we have (mostly) complete information
+; 
+; qualitative reasoning is useful in two ways
+; 
+; for one, if we have incomplete information, (E.G. it is difficult for me to count the exact size of an  army, but I can quickly get a heuristic for its size), then we can use this quantization in a formal
+; reasoning system
+; 
+; two: even if we do have complete information, quantization still helps in the tractability of reasoning
+; 
+
+
