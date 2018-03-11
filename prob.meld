@@ -84,6 +84,12 @@
 		(prob ?evb ?pb)
 		(greaterThan ?pa ?pb)))
 
+(<== (equallyLikely ?eva ?evb)
+    (and
+        (prob ?eva ?pa)
+        (prob ?evb ?pb)
+        (equals ?pa ?pb)))
+
 (<== (likely ?ev)
     (and
         (prob ?ev ?number)
@@ -132,12 +138,33 @@
 
  ;; general qualitative additivity
 
+ ;; general qualitative additivity
+
 (<== (moreLikelyThan ?ev1 ?ev2)
  (and 
-  (moreLikelyThan (and ?ev1 ?ev3) (and ?ev2 ?ev3))
+  (moreLikelyThan (or ?ev1 ?ev3) (or ?ev2 ?ev3))
+  (contradictory (and ?ev1 ?ev3))
+  (contradictory (and ?ev2 ?ev3))
+  ))
+
+(<== (moreLikelyThan (or ?ev1 ?ev3) (or ?ev2 ?ev3)) 
+ (and 
+  (moreLikelyThan ?ev1 ?ev2)
   (contradictory (and ?ev1 ?ev3))
   (contradictory (and ?ev2 ?ev3))
   )) 
+ 
+(<== (moreLikelyThan (or ?ev1 ?ev3) (or ?ev2 ?ev4)) 
+ (and 
+  (moreLikelyThan (or ?ev1 ?ev3) (or ?ev2 ?ev3))
+  (contradictory (and ?ev1 ?ev3))
+  (contradictory (and ?ev2 ?ev3))
+  (contradictory (and ?ev1 ?ev4))
+  (contradictory (and ?ev2 ?ev4))
+  (equallyLikely ?ev3 ?ev4))
+  )
+
+
 
 
 
