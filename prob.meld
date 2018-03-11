@@ -17,46 +17,11 @@
 (prob RandomEventTre 0)
 (prob RandomEventFur 1)
 
-;;; ontology
-
-(isa prob Predicate)
-(arity prob 2)
-(arg1Isa prob CycLPropositionalSentence)
-(arg2Isa prob Real0-1)
-
-(isa lessLikelyThan Predicate)
-(arity lessLikelyThan 2)
-(arg1Isa lessLikelyThan CycLPropositionalSentence)
-(arg2Isa lessLikelyThan CycLPropositionalSentence)
-
-(isa atMostAsLikelyAs Predicate)
-(arity atMostAsLikelyAs 2)
-(arg1Isa atMostAsLikelyAs CycLPropositionalSentence)
-(arg2Isa atMostAsLikelyAs CycLPropositionalSentence)
-
-(isa equallyLikely Predicate)
-(arity equallyLikely 2)
-(arg1Isa equallyLikely CycLPropositionalSentence)
-(arg2Isa equallyLikely CycLPropositionalSentence)
-
-(isa likely Predicate)
-(arity likely 1)
-(arg1Isa likely CycLPropositionalSentence)
-
-(isa unlikely Predicate)
-(arity unlikely 1)
-(arg1Isa unlikely CycLPropositionalSentence)
-
-(isa tautological Predicate)
-(arity tautological 1)
-(arg1Isa tautological CycLPropositionalSentence)
-
-(isa contradictory Predicate)
-(arity contradictory 1)
-(arg1Isa contradictory CycLPropositionalSentence)
 
 
-;;; these definitions are operationalizing the concepts of tautology and contradiction (we are not assuming these are given as granted)
+;;; HORN CLAUSES
+
+;;; 1. these clauses are operationalizing the concepts of tautology and contradiction (we are not assuming these are given as granted)
 
 (<== (tautological ?ev)
 	(isa ?ev CycLPropositionalSentence)
@@ -66,7 +31,7 @@
 	(isa ?ev CycLPropositionalSentence)
 	(prob ?ev 0))
 
-;;; qualitative probability rules involving tautological and contradictory propositions
+;;; 2. qualitative probability rules involving tautological and contradictory propositions
 
 (<== (atLeastAsLikelyAs ?eva ?evb)
 	(contradictory ?evb))
@@ -79,7 +44,7 @@
 		(tautological ?eva)
 		(contradictory ?evb)))
 
-;;; Links between comparative predicates (this could be handled via genls)
+;;; 3. Links between comparative predicates (this could be handled via genls)
 
 (<== (atLeastAsLikelyAs ?eva ?evb)
     (atMostAsLikelyAs ?evb ?eva))
@@ -98,7 +63,7 @@
         (atLeastAsLikelyAs ?eva ?evb)
         (atLeastAsLikelyAs ?evb ?eva)))
 
-;;; links between binary and unary probability operators.
+;;; 4. links between binary and unary probability operators.
 ;;; likely p iff p is more likely than not p
 
 (<== (likely ?eva)
@@ -111,7 +76,7 @@
         (likely ?eva)
         (negationOf ?evb ?eva)))
 
-;;; principles for exporting from numerical probability into comparative
+;;; 5. principles for exporting from numerical probability into comparative
 
 (<== (moreLikelyThan ?eva ?evb)
 	(and
@@ -130,7 +95,55 @@
         (lessThan ?number .5)))
 
 
-;;; new conjunction and disjunction stuff
+;;; 6. clauses for the interaction between qualitative probability and conjunction/disjunction
+
+
+;; 6.1. likely and conjunction
+
+(<== (likely ?ev1)
+    (likely (and ?ev1 ?ev2)))
+
+(<== (likely ?ev2)
+    (likely (and ?ev1 ?ev2)))
+
+ ;; 6.2. likely and disjunction
+
+(<== (likely (or ?ev1 ?ev2))
+     (likely ?ev1))
+
+(<== (likely (or ?ev1 ?ev2))
+    likely ?ev2))
+
+ ;; 6.3. unlikely and conjunction
+
+(<== (unlikely (and ?ev1 ?ev2))
+     (unlikely ?ev2))
+
+(<== (unlikely (and ?ev1 ?ev2))
+     (unlikely ?ev1))
+
+;; 6.4. unlikely and disjunction
+
+(<== (unlikely ?ev1)
+    (unlikely (or ?ev1 ?ev2)))
+
+(<== (unlikely ?ev2)
+    (unlikely (or ?ev1 ?ev2)))
+
+ ;; general qualitative additivity
+
+(<== (moreLikelyThan ?ev1 ?ev2)
+ (and 
+  (moreLikelyThan (and ?ev1 ?ev3) (and ?ev2 ?ev3))
+  (contradictory (and ?ev1 ?ev3))
+  (contradictory (and ?ev2 ?ev3))
+  )) 
+
+
+
+
+
+;;; will's stuff for reasoning about dice game
 
 
 (<== (equallyLikely ?eva ?evc)
@@ -142,25 +155,3 @@
 	(and
 		(moreLikelyThan ?eva ?evb)
 		(equallyLikely ?evb ?evc)))
-
-
-;;; principles that are cognates or consequences of qualitative additivity
-; (<== (and (likely ?ev1)
-;  (and (likely ?ev1) 
-;  	  (likely ?ev2)))
-
-
-; (<== (or (likely ?ev1) (likely ?ev2))
-;  (likely ?ev1))
-
-; (<== (or (likely ?ev1) (likely ?ev2))
-;  (likely ?ev2))
-
-; (<== (moreLikelyThan ?ev1 ?ev2)
-;  (and 
-;   (moreLikelyThan (and (moreLikelyThan ?ev1) (moreLikelyThan ?ev3)) 
-;   				  (and (moreLikelyThan ?ev2) (moreLikelyThan ?ev3)))
-;   (contradictory (and ?ev1 ?ev3))
-;   (contradictory (and ?ev2 ?ev3))
-;   ))
-

@@ -1,0 +1,40 @@
+
+;;; ontology
+
+(in-microtheory QualProbMt)
+
+(isa prob Predicate)
+(arity prob 2)
+(arg1Isa prob CycLPropositionalSentence)
+(arg2Isa prob Real0-1)
+
+(isa lessLikelyThan Predicate)
+(arity lessLikelyThan 2)
+(arg1Isa lessLikelyThan CycLPropositionalSentence)
+(arg2Isa lessLikelyThan CycLPropositionalSentence)
+
+(isa atMostAsLikelyAs Predicate)
+(arity atMostAsLikelyAs 2)
+(arg1Isa atMostAsLikelyAs CycLPropositionalSentence)
+(arg2Isa atMostAsLikelyAs CycLPropositionalSentence)
+
+(isa equallyLikely Predicate)
+(arity equallyLikely 2)
+(arg1Isa equallyLikely CycLPropositionalSentence)
+(arg2Isa equallyLikely CycLPropositionalSentence)
+
+(isa likely Predicate)
+(arity likely 1)
+(arg1Isa likely CycLPropositionalSentence)
+
+(isa unlikely Predicate)
+(arity unlikely 1)
+(arg1Isa unlikely CycLPropositionalSentence)
+
+(isa tautological Predicate)
+(arity tautological 1)
+(arg1Isa tautological CycLPropositionalSentence)
+
+(isa contradictory Predicate)
+(arity contradictory 1)
+(arg1Isa contradictory CycLPropositionalSentence)
