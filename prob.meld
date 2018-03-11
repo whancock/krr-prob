@@ -112,7 +112,7 @@
      (likely ?ev1))
 
 (<== (likely (or ?ev1 ?ev2))
-    likely ?ev2))
+    likely ?ev2)
 
  ;; 6.3. unlikely and conjunction
 
