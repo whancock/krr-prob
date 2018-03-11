@@ -2,6 +2,7 @@
 
 (in-microtheory QualProbMt)
 (genlMt QualProbMt UniversalVocabularyMt)
+(genlMt QualProbMt LogicalTruthMt)
 
 ;;; CycLpropositionalSentences to use in our tests
 
@@ -129,5 +130,37 @@
         (lessThan ?number .5)))
 
 
+;;; new conjunction and disjunction stuff
 
+
+(<== (equallyLikely ?eva ?evc)
+    (and
+        (equallyLikely ?eva ?evb)
+        (equallyLikely ?evb ?evc)))
+
+(<== (moreLikelyThan ?eva ?evc)
+	(and
+		(moreLikelyThan ?eva ?evb)
+		(equallyLikely ?evb ?evc)))
+
+
+;;; principles that are cognates or consequences of qualitative additivity
+; (<== (and (likely ?ev1)
+;  (and (likely ?ev1) 
+;  	  (likely ?ev2)))
+
+
+; (<== (or (likely ?ev1) (likely ?ev2))
+;  (likely ?ev1))
+
+; (<== (or (likely ?ev1) (likely ?ev2))
+;  (likely ?ev2))
+
+; (<== (moreLikelyThan ?ev1 ?ev2)
+;  (and 
+;   (moreLikelyThan (and (moreLikelyThan ?ev1) (moreLikelyThan ?ev3)) 
+;   				  (and (moreLikelyThan ?ev2) (moreLikelyThan ?ev3)))
+;   (contradictory (and ?ev1 ?ev3))
+;   (contradictory (and ?ev2 ?ev3))
+;   ))
 

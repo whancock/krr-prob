@@ -45,3 +45,36 @@
 (isa roll6 CycLPropositionalSentence)
 
 
+(isa evenp Predicate)
+(arity evenp 1)
+(arg1Isa evenp CycLPropositionalSentence)
+
+(isa oddp Predicate)
+(arity oddp 1)
+(arg1Isa oddp CycLPropositionalSentence)
+
+
+
+(oddp roll1)
+(oddp roll3)
+(oddp roll5)
+
+(evenp roll2)
+(evenp roll4)
+(evenp roll6)
+
+
+
+(moreLikelyThan roll4 roll1)
+
+(equallyLikely roll1 roll2)
+(equallyLikely roll2 roll3)
+(equallyLikely roll3 roll5)
+(equallyLikely roll5 roll6)
+
+
+;;; try to prove that evenp is more likely than oddp
+;;; how do I even ask this?
+
+;;; talk about sets of things
+;;; sum of prob-set is 1
