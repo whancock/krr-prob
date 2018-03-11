@@ -30,3 +30,18 @@
 ; 
 
 
+; if I know individual outcomes for units, could I win a battle?
+
+
+
+(in-microtheory QualProbMt)
+
+
+(isa roll1 CycLPropositionalSentence)
+(isa roll2 CycLPropositionalSentence)
+(isa roll3 CycLPropositionalSentence)
+(isa roll4 CycLPropositionalSentence)
+(isa roll5 CycLPropositionalSentence)
+(isa roll6 CycLPropositionalSentence)
+
+

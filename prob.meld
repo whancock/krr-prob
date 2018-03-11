@@ -100,15 +100,15 @@
 ;;; links between binary and unary probability operators.
 ;;; likely p iff p is more likely than not p
 
-(<== (likely(?eva))
+(<== (likely ?eva)
     (and
-        (moreLikelyThan(?eva ?evb))
-        (negationOf(?evb ?eva))))
+        (moreLikelyThan ?eva ?evb)
+        (negationOf ?evb ?eva)))
 
-(<== (moreLikelyThan(?eva ?evb))
+(<== (moreLikelyThan ?eva ?evb)
     (and
-        (likely(?eva))
-        (negationOf(?evb ?eva))))
+        (likely ?eva)
+        (negationOf ?evb ?eva)))
 
 ;;; principles for exporting from numerical probability into comparative
 
