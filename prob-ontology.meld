@@ -38,3 +38,8 @@
 (isa contradictory Predicate)
 (arity contradictory 1)
 (arg1Isa contradictory CycLPropositionalSentence)
+
+
+(isa rollOf Predicate)
+(arity rollOf 1)
+(arg1Isa rollOf Integer)

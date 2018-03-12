@@ -2,20 +2,30 @@
 
 (in-microtheory QualProbMt)
 (genlMt QualProbMt UniversalVocabularyMt)
-(genlMt QualProbMt LogicalTruthMt)
+;;; (genlMt QualProbMt LogicalTruthMt)
 
 ;;; CycLpropositionalSentences to use in our tests
 
-(isa RandomEventOne CycLPropositionalSentence)
-(isa RandomEventTwo CycLPropositionalSentence)
-(isa RandomEventTre CycLPropositionalSentence)
-(isa RandomEventFur CycLPropositionalSentence)
+; (isa RandomEventOne CycLPropositionalSentence)
+; (isa RandomEventTwo CycLPropositionalSentence)
+; (isa RandomEventTre CycLPropositionalSentence)
+; (isa RandomEventFur CycLPropositionalSentence)
 
 
-(prob RandomEventOne 1)
-(prob RandomEventTwo 0.35)
-(prob RandomEventTre 0)
-(prob RandomEventFur 1)
+; (prob RandomEventOne 1)
+; (prob RandomEventTwo 0.35)
+; (prob RandomEventTre 0)
+; (prob RandomEventFur 1)
+
+
+;;; new tries
+
+(prob (rollOf 1) .12)
+(prob (rollOf 2) .12)
+(prob (rollOf 3) .12)
+(prob (rollOf 4) .4)
+(prob (rollOf 5) .12)
+(prob (rollOf 6) .12)
 
 
 
@@ -52,11 +62,11 @@
 (<== (moreLikelyThan ?eva ?evb)
     (lessLikelyThan ?evb ?eva))
 
-(<== (atLeastAsLikelyAs ?eva ?evb)
-    (moreLikelyThan ?eva ?evb))
+; (<== (atLeastAsLikelyAs ?eva ?evb)
+;     (moreLikelyThan ?eva ?evb))
 
-(<== (atMostAsLikelyAs ?eva ?evb)
-    (lessLikelyThan ?eva ?evb))
+; (<== (atMostAsLikelyAs ?eva ?evb)
+;     (lessLikelyThan ?eva ?evb))
 
 (<== (equallyLikely ?eva ?evb)
     (and
@@ -66,15 +76,15 @@
 ;;; 4. links between binary and unary probability operators.
 ;;; likely p iff p is more likely than not p
 
-(<== (likely ?eva)
-    (and
-        (moreLikelyThan ?eva ?evb)
-        (negationOf ?evb ?eva)))
+; (<== (likely ?eva)
+;     (and
+;         (moreLikelyThan ?eva ?evb)
+;         (negationOf ?evb ?eva)))
 
-(<== (moreLikelyThan ?eva ?evb)
-    (and
-        (likely ?eva)
-        (negationOf ?evb ?eva)))
+; (<== (moreLikelyThan ?eva ?evb)
+;     (and
+;         (likely ?eva)
+;         (negationOf ?evb ?eva)))
 
 ;;; 5. principles for exporting from numerical probability into comparative
 
@@ -106,39 +116,50 @@
 
 ;; 6.1. likely and conjunction
 
-(<== (likely ?ev1)
-    (likely (and ?ev1 ?ev2)))
+; (<== (likely ?ev1)
+;     (likely (and ?ev1 ?ev2)))
 
-(<== (likely ?ev2)
-    (likely (and ?ev1 ?ev2)))
+; (<== (likely ?ev2)
+;     (likely (and ?ev1 ?ev2)))
 
  ;; 6.2. likely and disjunction
 
-(<== (likely (or ?ev1 ?ev2))
-     (likely ?ev1))
+; (<== (likely (or ?ev1 ?ev2))
+;      (likely ?ev1))
 
-(<== (likely (or ?ev1 ?ev2))
-    likely ?ev2)
+; (<== (likely (or ?ev1 ?ev2))
+;     likely ?ev2)
 
  ;; 6.3. unlikely and conjunction
 
-(<== (unlikely (and ?ev1 ?ev2))
-     (unlikely ?ev2))
+; (<== (unlikely (and ?ev1 ?ev2))
+;      (unlikely ?ev2))
 
-(<== (unlikely (and ?ev1 ?ev2))
-     (unlikely ?ev1))
+; (<== (unlikely (and ?ev1 ?ev2))
+;      (unlikely ?ev1))
 
 ;; 6.4. unlikely and disjunction
 
-(<== (unlikely ?ev1)
-    (unlikely (or ?ev1 ?ev2)))
+; (<== (unlikely ?ev1)
+;     (unlikely (or ?ev1 ?ev2)))
 
-(<== (unlikely ?ev2)
-    (unlikely (or ?ev1 ?ev2)))
-
- ;; general qualitative additivity
+; (<== (unlikely ?ev2)
+;     (unlikely (or ?ev1 ?ev2)))
 
  ;; general qualitative additivity
+
+
+(<== (contradictory(and (rollOf ?num1) (rollOf ?num2)))
+         (different ?num1 ?num2))
+
+
+(<== (moreLikelyThan (or ?ev1 ?ev3) (or ?ev2 ?ev3)) 
+ (and 
+  (moreLikelyThan ?ev1 ?ev2)
+  (contradictory (and ?ev1 ?ev3))
+  (contradictory (and ?ev2 ?ev3))
+  )) 
+
 
 (<== (moreLikelyThan ?ev1 ?ev2)
  (and 
@@ -147,12 +168,7 @@
   (contradictory (and ?ev2 ?ev3))
   ))
 
-(<== (moreLikelyThan (or ?ev1 ?ev3) (or ?ev2 ?ev3)) 
- (and 
-  (moreLikelyThan ?ev1 ?ev2)
-  (contradictory (and ?ev1 ?ev3))
-  (contradictory (and ?ev2 ?ev3))
-  )) 
+
  
 (<== (moreLikelyThan (or ?ev1 ?ev3) (or ?ev2 ?ev4)) 
  (and 
@@ -170,15 +186,21 @@
 
 
 
+; need to prove
+; (moreLikelyThan (or (rollOf 4) (rollOf 2)) (rollOf 6))
+
+
+
+
 ;;; will's stuff for reasoning about dice game
 
 
-(<== (equallyLikely ?eva ?evc)
-    (and
-        (equallyLikely ?eva ?evb)
-        (equallyLikely ?evb ?evc)))
+; (<== (equallyLikely ?eva ?evc)
+;     (and
+;         (equallyLikely ?eva ?evb)
+;         (equallyLikely ?evb ?evc)))
 
-(<== (moreLikelyThan ?eva ?evc)
-	(and
-		(moreLikelyThan ?eva ?evb)
-		(equallyLikely ?evb ?evc)))
+; (<== (moreLikelyThan ?eva ?evc)
+; 	(and
+; 		(moreLikelyThan ?eva ?evb)
+; 		(equallyLikely ?evb ?evc)))
