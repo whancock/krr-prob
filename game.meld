@@ -55,6 +55,8 @@
 
 
 
+
+
 (oddp roll1)
 (oddp roll3)
 (oddp roll5)
@@ -78,3 +80,9 @@
 
 ;;; talk about sets of things
 ;;; sum of prob-set is 1
+
+
+(prob (TheSet roll1 roll2 roll3 roll4 roll5 roll6) 1)
+(prob (TheSet roll1 roll3 roll5) .4)
+(prob (TheSet roll2 roll4 roll6) .6)
+
