@@ -158,7 +158,9 @@
   (moreLikelyThan ?ev1 ?ev2)
   (contradictory (and ?ev1 ?ev3))
   (contradictory (and ?ev2 ?ev3))
-  )) 
+  ))
+
+
 
 
 (<== (moreLikelyThan ?ev1 ?ev2)
@@ -168,6 +170,13 @@
   (contradictory (and ?ev2 ?ev3))
   ))
 
+
+(<== (moreLikelyThan (or ?ev1 ?ev3) (or ?ev2 ?ev3))
+ (and 
+  (moreLikelyThan ?ev1 ?ev2)
+  (contradictory (and ?ev1 ?ev3))
+  (contradictory (and ?ev2 ?ev3))
+  ))
 
  
 (<== (moreLikelyThan (or ?ev1 ?ev3) (or ?ev2 ?ev4)) 
@@ -182,12 +191,20 @@
 
 
 
+(<== (contradictory (and (or ?eva ?evb) ?evc))
+	(contradictory (and ?eva ?evb))
+	(contradictory (and ?eva ?evc))
+	(contradictory (and ?evb ?evc)))
 
 
 
+; (contradictory 
+; 	(and 
+; 		(or (rollOf 4) (rollOf 6))
+; 		(rollOf 2)
+; 	)
+; )
 
-; need to prove
-; (moreLikelyThan (or (rollOf 4) (rollOf 2)) (rollOf 6))
 
 
 
