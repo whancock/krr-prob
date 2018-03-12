@@ -201,20 +201,23 @@
 
 
 (<== (likely ?ev1)
-    (moreLikelyThan ?ev1 ?ev2)
-    (tautological (or ?ev1 ?ev2))
-    )
+	 (tautological (or ?ev1 ?ev2))
+     (moreLikelyThan ?ev1 ?ev2)
+     )
 
-(<== (unlikely ?ev2)
-    (moreLikelyThan(?ev1 ?ev2))
-    (tautological (or ?ev1 ?ev2))
-    )
+; (<== (unlikely ?ev2)
+; 	 (tautological (or ?ev1 ?ev2))
+;      (moreLikelyThan ?ev1 ?ev2)
+;      )
 
 (tautological 
   (or 
-    (or (or (isa rollOf 4) (isa rollOf 2)) (isa rollOf 6))
-    (or (or (isa rollOf 3) (isa rollOf 1)) (isa rollOf 5))
-    )
+    (or (or (rollOf 4) (rollOf 2)) (rollOf 6))
+    (or (or (rollOf 3) (rollOf 1)) (rollOf 5))
+    ))
+
+
+
 
 
 ; (contradictory 
